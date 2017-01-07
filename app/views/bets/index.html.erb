@@ -1,0 +1,15 @@
+<h1> Over-Under Tracker</h1>
+
+<h1> Competition for <%= Date.today %> </h1>
+
+<h1> Bets </h1>
+  <% @bets.each do |bet| %>
+    <h3> <%= bet.title.capitalize %> </h3>
+      <p> <%= bet.description %> Prediction: <%= bet.set_number %> </p>
+      <p> Voter: <%= bet.voter %>
+      <% if bet.vote %>
+        <p> Choice: Over </p>
+      <% else %>
+        <p> Choice: Under </p>
+      <% end %>
+  <% end %>

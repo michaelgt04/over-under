@@ -1,0 +1,16 @@
+<h1> Create New Bet </h1>
+
+<%= form_for @bet do |f| %>
+  <%= f.label :title %>
+  <%= f.text_field :title %></br>
+  <%= f.label :description %>
+  <%= f.text_area :description %></br>
+  <%= f.label "Set Number" %>
+  <%= f.text_field :set_number %></br>
+  <%= f.label :voter %>
+  <%= f.text_field :voter %></br>
+  <%= f.label :vote %>
+  <%= select_tag(:vote, options_for_select(["Over", "Under"])) %></br>
+
+  <%= f.submit "Create" %>
+<% end %>
