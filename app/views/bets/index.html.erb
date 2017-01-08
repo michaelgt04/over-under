@@ -2,6 +2,8 @@
 
 <h1> Competition for <%= Date.today %> </h1>
 
+<%= link_to "Create New", new_bet_path %>
+
 <h1> Bets </h1>
   <% @bets.each do |bet| %>
     <h3> <%= bet.title.capitalize %> </h3>
@@ -12,4 +14,7 @@
       <% else %>
         <p> Choice: Under </p>
       <% end %>
+      <p> Current Count: <%=bet.count %></p>
+      <%= link_to "Add", bet, method: :patch %>
+      <%= link_to "Delete", bet, method: :delete %>
   <% end %>
