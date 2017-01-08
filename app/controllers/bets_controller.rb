@@ -21,7 +21,6 @@ class BetsController < ApplicationController
   end
 
   def update
-    binding.pry
     @bet = Bet.find(params[:id])
     next_count = @bet.count + 1
     @bet.update(count: next_count)
