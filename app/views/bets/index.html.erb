@@ -16,5 +16,6 @@
       <% end %>
       <p> Current Count: <%=bet.count %></p>
       <%= link_to "Add", bet, method: :patch %>
+      <%= link_to "Undo Add", bet, method: :put %>
       <%= link_to "Delete", bet, method: :delete %>
   <% end %>
