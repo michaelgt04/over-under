@@ -106,6 +106,7 @@ class App extends Component {
         let bets = response.json()
         return bets
       }).then(response => {
+        debugger;
         this.setState({
           bets: response
         })
@@ -114,6 +115,13 @@ class App extends Component {
 
   render() {
     let bets = this.state.bets.map(bet => {
+      let vote;
+      if (bet.vote === true) {
+        vote = "Over"
+      } else {
+        vote = "Under"
+      }
+
       let handleDelete = () => {
         this.handleDelete(bet.id)
       }
@@ -128,7 +136,7 @@ class App extends Component {
           description={bet.description}
           number={bet.set_number}
           voter={bet.voter}
-          vote={bet.vote}
+          vote={vote}
           count={bet.count}
           handleDelete={handleDelete}
           handleCountAdd={handleCountAdd}

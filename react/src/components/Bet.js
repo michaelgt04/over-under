@@ -7,7 +7,7 @@ const Bet = props => {
       <p>{props.description}</p>
       <p>{props.number}</p>
       <p>{props.voter}</p>
-      <p>{props.vote}</p>
+      <p>Vote: {props.vote}</p>
       <p>Count: {props.count}</p>
       <button type="button" onClick={props.handleCountAdd}>Add Vote</button>
       <button type="button" onClick={props.handleDelete}>Delete</button>
