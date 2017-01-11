@@ -1,10 +1,41 @@
 class Api::V1::BetsController < ApplicationController
+  skip_before_filter :verify_authenticity_token
+
   def index
     bets = Bet.all
     render json: bets
   end
 
   def create
-    binding.pry
+    data = JSON.parse(request.body.read)
+    vote = data["vote"] == "Over"
+    bet = Bet.new(
+      title: data["title"],
+      description: data["description"],
+      set_number: data["set_number"],
+      voter: data["voter"],
+      vote: vote
+    )
+    if bet.save!
+      bets = Bet.all
+      render json: bets
+    end
+  end
+
+  def update
+    bet = Bet.find(params[:id])
+    new_count = bet.count += 1
+    bet.update_attributes(count: new_count)
+    bets = Bet.all
+    bets.order(:id)
+    render json: bets
+  end
+
+  def destroy
+    bet = Bet.find(params[:id])
+    bet.delete
+    bets = Bet.all
+    bets.order(:id)
+    render json: bets
   end
 end

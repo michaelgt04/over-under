@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Restaurant from './Restaurant'
+import Bet from './Bet'
 import Form from './Form'
 
 class App extends Component {
@@ -11,14 +11,16 @@ class App extends Component {
       description: "",
       number: "",
       voter: "",
-      vote: "Over",
+      vote: "Over"
     };
     this.handleTitleChange = this.handleTitleChange.bind(this)
     this.handleNumberChange = this.handleNumberChange.bind(this)
     this.handleDescriptionChange = this.handleDescriptionChange.bind(this)
+    this.handleVoterChange = this.handleVoterChange.bind(this)
+    this.handleVoteChange = this.handleVoteChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
     this.handleDelete = this.handleDelete.bind(this)
-    this.handleUpVote = this.handleUpVote.bind(this)
+    this.handleCountAdd = this.handleCountAdd.bind(this)
     this.handleDownVote = this.handleDownVote.bind(this)
   }
 
@@ -49,41 +51,41 @@ class App extends Component {
 
   handleSubmit(event){
     event.preventDefault()
-    let fetchBody = { title: this.state.title, description: this.state.description, voter: this.state.voter, vote: this.state.vote }
+    let fetchBody = { title: this.state.title, description: this.state.description, set_number: this.state.number, voter: this.state.voter, vote: this.state.vote }
     let newRestaurants = []
-    fetch('/api/v1/restaurants',
+    fetch('/api/v1/bets',
       { method: "POST",
       body: JSON.stringify(fetchBody) })
       .then(function(response) {
-        newRestaurants = response.json()
-        return newRestaurants
+        let newBets = response.json()
+        return newBets
       }).then((response) => this.setState({
-        restaurants: response,
+        bets: response,
       }))
   }
 
-  handleDelete(restaurantId){
-    let fetchBody = { id: restaurantId }
-    let newRestaurants = []
-    fetch(`/api/v1/restaurants/${restaurantId}`,
+  handleDelete(betId){
+    let fetchBody = { id: betId }
+    let newBets = []
+    fetch(`/api/v1/bets/${betId}`,
     { method: "DELETE",
     body: JSON.stringify(fetchBody)
   }).then(function(response) {
-      newRestaurants = response.json()
-      return newRestaurants
-  }).then((response) => this.setState({restaurants: response}))
+      newBets = response.json()
+      return newBets
+  }).then((response) => this.setState({bets: response}))
   }
 
-  handleUpVote(restaurantId){
-    let fetchBody = { id: restaurantId, type: "up_vote" }
-    let newRestaurants = []
-    fetch(`/api/v1/restaurants/${restaurantId}`,
+  handleCountAdd(betId){
+    let fetchBody = { id: betId }
+    let newBets = []
+    fetch(`/api/v1/bets/${betId}`,
     { method: "PATCH",
     body: JSON.stringify(fetchBody)
   }).then(function(response) {
-      newRestaurants = response.json()
-      return newRestaurants
-  }).then((response) => this.setState({restaurants: response}))
+      newBets = response.json()
+      return newBets
+  }).then((response) => this.setState({bets: response}))
   }
 
   handleDownVote(restaurantId){
@@ -101,6 +103,9 @@ class App extends Component {
   componentDidMount() {
     fetch('/api/v1/bets')
       .then(response => {
+        let bets = response.json()
+        return bets
+      }).then(response => {
         this.setState({
           bets: response
         })
@@ -108,41 +113,41 @@ class App extends Component {
   }
 
   render() {
-    // let restaurants = this.state.bets.map(restaurant => {
-    //   let handleDelete = () => {
-    //     this.handleDelete(restaurant.id)
-    //   }
-    //   let handleUpVote = () => {
-    //     this.handleUpVote(restaurant.id)
-    //   }
-    //   let handleDownVote = () => {
-    //     this.handleDownVote(restaurant.id)
-    //   }
-    //   return(
-    //     <Restaurant
-    //       key={restaurant.id}
-    //       id={restaurant.id}
-    //       name={restaurant.name}
-    //       category={restaurant.category}
-    //       description={restaurant.description}
-    //       upVotes={restaurant.up_votes}
-    //       downVotes={restaurant.down_votes}
-    //       handleDelete={handleDelete}
-    //       handleUpVote={handleUpVote}
-    //       handleDownVote={handleDownVote}
-    //      />
-    //   )
-    // })
+    let bets = this.state.bets.map(bet => {
+      let handleDelete = () => {
+        this.handleDelete(bet.id)
+      }
+      let handleCountAdd = () => {
+        this.handleCountAdd(bet.id)
+      }
+      return(
+        <Bet
+          key={bet.id}
+          id={bet.id}
+          title={bet.title}
+          description={bet.description}
+          number={bet.set_number}
+          voter={bet.voter}
+          vote={bet.vote}
+          count={bet.count}
+          handleDelete={handleDelete}
+          handleCountAdd={handleCountAdd}
+         />
+      )
+    })
     return(
       <div>
-        <h1 className="columns small-4 small-centered">Fast-Food Fiend</h1>
-        <h2 className="columns small-4 small-centered">New Restaurant</h2>
+        <h1>Over-Under</h1>
+        <h2>New Bet</h2>
         <Form
-          handleNameChange={this.handleNameChange}
-          handleCategoryChange={this.handleCategoryChange}
+          handleTitleChange={this.handleTitleChange}
           handleDescriptionChange={this.handleDescriptionChange}
+          handleNumberChange={this.handleNumberChange}
+          handleVoterChange={this.handleVoterChange}
+          handleVoteChange={this.handleVoteChange}
           handleSubmit={this.handleSubmit}
         />
+        {bets}
       </div>
       )
     }
