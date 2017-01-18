@@ -2,7 +2,7 @@ class Api::V1::BetsController < ApplicationController
   skip_before_filter :verify_authenticity_token
 
   def index
-    bets = Bet.all
+    bets = Bet.order(:id)
     render json: bets
   end
 
@@ -17,7 +17,7 @@ class Api::V1::BetsController < ApplicationController
       vote: vote
     )
     if bet.save!
-      bets = Bet.all
+      bets = Bet.order(:id)
       render json: bets
     end
   end
@@ -26,16 +26,14 @@ class Api::V1::BetsController < ApplicationController
     bet = Bet.find(params[:id])
     new_count = bet.count += 1
     bet.update_attributes(count: new_count)
-    bets = Bet.all
-    bets.order(:id)
+    bets = Bet.order(:id)
     render json: bets
   end
 
   def destroy
     bet = Bet.find(params[:id])
     bet.delete
-    bets = Bet.all
-    bets.order(:id)
+    bets = Bet.order(:id)
     render json: bets
   end
 end

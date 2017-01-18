@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Bet from './Bet'
 import Form from './Form'
+import Header from './Header'
 
 class App extends Component {
   constructor(props) {
@@ -59,9 +60,9 @@ class App extends Component {
       .then(function(response) {
         let newBets = response.json()
         return newBets
-      }).then((response) => this.setState({
+      }).then((response) => {this.setState({
         bets: response,
-      }))
+      })})
   }
 
   handleDelete(betId){
@@ -85,7 +86,7 @@ class App extends Component {
   }).then(function(response) {
       newBets = response.json()
       return newBets
-  }).then((response) => this.setState({bets: response}))
+  }).then((response) => {this.setState({ bets: response })})
   }
 
   handleDownVote(restaurantId){
@@ -97,7 +98,7 @@ class App extends Component {
   }).then(function(response) {
       newRestaurants = response.json()
       return newRestaurants
-  }).then((response) => this.setState({restaurants: response}))
+  }).then((response) => {this.setState({restaurants: response})})
   }
 
   componentDidMount() {
@@ -106,7 +107,6 @@ class App extends Component {
         let bets = response.json()
         return bets
       }).then(response => {
-        debugger;
         this.setState({
           bets: response
         })
@@ -145,8 +145,7 @@ class App extends Component {
     })
     return(
       <div>
-        <h1>Over-Under</h1>
-        <h2>New Bet</h2>
+        <Header />
         <Form
           handleTitleChange={this.handleTitleChange}
           handleDescriptionChange={this.handleDescriptionChange}
