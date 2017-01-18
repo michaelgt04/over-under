@@ -19,7 +19,7 @@ const Form = props => {
         </div>
         <div className="row">
           <div className="columns small-3 small-offset-3">
-            <select name="category" className="browser-default" onChange={props.handleVoteChange}>
+            <select name="category" onChange={props.handleVoteChange}>
               <option value="Over">Over</option>
               <option value="Under">Under</option>
             </select>
