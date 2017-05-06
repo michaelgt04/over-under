@@ -1,21 +1,18 @@
-# README
+# Over-Under Tracker
 
-This repository has all the code necessary for starting a React on Rails application
-including testing. To get started, just clone the repository down and get started using
-React on Rails like you normally would.
+## Description
 
-## Areas in the Boilerplate to Update
-Be sure to search `boilerplate` within your project and update any references to
-boilerplate with the name of your application. If you do not follow this step, your
-application may not behave the way that you expect it to.
+This is a simple app I put together to practice integrating React (especially
+form functionality) with Rails. I've always enjoyed doing quick, fun over-under
+bets with my friends (e.g. How many donuts will I eat at Union Square Dounts? If
+I set it at two, you should definitely take the over!). These bets get hard to track
+though if there are a number of them going between friends at any given time. This
+app solves that (super) pressing problem by giving a place for bets to be recorded.
 
-## Ideas for Getting Started
-Potential places to start for a side project:
-* Find an API that interests you and display the information in an interesting way
-* Make a clone of a website that already exists
-* Make a game that users can play on a website
-* Extend an assignment that you've already done to add additional features
-
-No idea is too small, weird or insignificant to get started with. If you're interested
-in the project, you'll keep working on it and learn a lot about coding. Download the
-boilerplate, make those first commits and enjoy!
+This app also serves as a useful demonstration for students of the advantages of
+`fetch` and React given their lack of page reloads. The initial version did not have
+any JS functionality and as such reloaded the page any time a user increased the counter
+for a given bet. This leads to a disruptive user experience that makes it hard to keep
+an accurate count, especially if the count is being incremented quickly. Once React and
+`fetch` were added in, it no longer required page reloads and vastly improved the user
+experience.
